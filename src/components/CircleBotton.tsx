@@ -1,14 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, type ViewStyle } from 'react-native'
 
 interface Props {
-  children: string
+  children: JSX.Element
+  style?: ViewStyle
 }
 
 const CircleBotton = (props: Props): JSX.Element => {
-  const { children } = props
+  const { children, style } = props
 
   return (
-    <View style={styles.circleBotton}>
+    <View style={[styles.circleBotton, style]}>
       <Text style={styles.circleBottonLabel}>{children}</Text>
     </View>
   )
@@ -33,8 +34,10 @@ const styles = StyleSheet.create({
   },
   circleBottonLabel: {
     color: '#ffffff',
-    fontSize: 40,
-    lineHeight: 48
+    alignItems: 'center',
+    justifyContent: 'center'
+    // fontSize: 40,
+    // lineHeight: 48
   }
 })
 
