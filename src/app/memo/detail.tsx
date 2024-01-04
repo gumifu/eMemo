@@ -4,6 +4,11 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import Header from '../../components/Header'
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
+import { router } from 'expo-router'
+
+const handlePress = (): void => {
+  router.push('/memo/edit')
+}
 
 const Detail = (): JSX.Element => {
   return (
@@ -18,7 +23,7 @@ const Detail = (): JSX.Element => {
           買い物リスト書体やレイアウトなどを確認するために用います。本文用なので使い方を間違えると不自然に見えることもありますので要注意。
         </Text>
       </ScrollView>
-      <CircleBotton style={{ top: 160, bottom: 'auto' }}>
+      <CircleBotton style={{ top: 160, bottom: 'auto' }} onPress={handlePress}>
         {/* <Feather name="plus" size={40} /> */}
         <Icon name='pencil' size={48} color='#ffffff'/>
       </CircleBotton>

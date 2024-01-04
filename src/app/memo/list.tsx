@@ -5,6 +5,12 @@ import Header from '../../components/Header'
 import MemoListItem from '../../components/MemoListItem'
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
+import { router } from 'expo-router'
+
+const handlePress = (): void => {
+  // ログイン
+  router.push('/memo/create')
+}
 
 const List = (): JSX.Element => {
   return (
@@ -19,7 +25,7 @@ const List = (): JSX.Element => {
         <MemoListItem />
       </View>
 
-      <CircleBotton>
+      <CircleBotton onPress={handlePress}>
         {/* <Feather name='plus' size={40}/> */}
         <Icon name='plus' size={40} color='#ffffff'/>
       </CircleBotton>

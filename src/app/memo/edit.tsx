@@ -4,6 +4,11 @@ import {
 import Header from '../../components/Header'
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
+import { router } from 'expo-router'
+
+const handlePress = (): void => {
+  router.back()
+}
 
 const Edit = (): JSX.Element => {
   return (
@@ -12,7 +17,7 @@ const Edit = (): JSX.Element => {
       <View style={styles.inputContainer}>
         <TextInput multiline style={styles.input} value={'買い物リスト'} />
       </View>
-      <CircleBotton>
+      <CircleBotton onPress={handlePress}>
         <Icon name='check' size={40} color='#ffffff' />
       </CircleBotton>
     </KeyboardAvoidingView>
