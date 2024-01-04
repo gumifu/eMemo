@@ -1,11 +1,12 @@
 import { View, StyleSheet } from 'react-native'
-// import { Feather } from '@expo/vector-icons'
+import { router, useNavigation } from 'expo-router'
+import { useEffect } from 'react'
 
-import Header from '../../components/Header'
 import MemoListItem from '../../components/MemoListItem'
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
-import { router } from 'expo-router'
+import LogOutButton from '../../components/LogOutButton'
+// import { Feather } from '@expo/vector-icons'
 
 const handlePress = (): void => {
   // ログイン
@@ -13,18 +14,20 @@ const handlePress = (): void => {
 }
 
 const List = (): JSX.Element => {
+  const navigation = useNavigation()
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => { return <LogOutButton /> }
+    })
+  }, [])
   return (
     <View style={styles.container}>
-
-      <Header />
-
       <View>
         <MemoListItem />
         <MemoListItem />
         <MemoListItem />
         <MemoListItem />
       </View>
-
       <CircleBotton onPress={handlePress}>
         {/* <Feather name='plus' size={40}/> */}
         <Icon name='plus' size={40} color='#ffffff'/>

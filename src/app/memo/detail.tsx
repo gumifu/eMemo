@@ -1,7 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 // import { Feather } from '@expo/vector-icons'
 
-import Header from '../../components/Header'
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
 import { router } from 'expo-router'
@@ -13,7 +12,6 @@ const handlePress = (): void => {
 const Detail = (): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Header/>
       <View style={styles.memoHeader}>
         <Text style={styles.memoTitle}>買い物リスト</Text>
         <Text style={styles.memoDate}>2024年01月03日 10:00</Text>
@@ -23,7 +21,7 @@ const Detail = (): JSX.Element => {
           買い物リスト書体やレイアウトなどを確認するために用います。本文用なので使い方を間違えると不自然に見えることもありますので要注意。
         </Text>
       </ScrollView>
-      <CircleBotton style={{ top: 160, bottom: 'auto' }} onPress={handlePress}>
+      <CircleBotton style={{ top: 60, bottom: 'auto' }} onPress={handlePress}>
         {/* <Feather name="plus" size={40} /> */}
         <Icon name='pencil' size={48} color='#ffffff'/>
       </CircleBotton>
