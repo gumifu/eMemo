@@ -3,25 +3,45 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 
 import CircleBotton from '../../components/CircleBotton'
 import Icon from '../../components/Icon'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { type Memo } from '../../../types/memo'
+import { auth, db } from '../../config'
+import { doc, onSnapshot } from 'firebase/firestore'
 
-const handlePress = (): void => {
-  router.push('/memo/edit')
+const handlePress = (id: string): void => {
+  router.push({ pathname: '/memo/edit', params: { id } })
 }
 
 const Detail = (): JSX.Element => {
+  const id = String(useLocalSearchParams().id)
+  const [memo, setMemo] = useState<Memo | null>(null)
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos`, id)
+    const unsubscribe = onSnapshot(ref, (memoDoc) => {
+      const { bodyText, updatedAt } = memoDoc.data() as Memo
+      setMemo({
+        id: memoDoc.id,
+        bodyText,
+        updatedAt
+      })
+    })
+    return unsubscribe
+  }, [])
+  // console.log(id)
   return (
     <View style={styles.container}>
       <View style={styles.memoHeader}>
-        <Text style={styles.memoTitle}>買い物リスト</Text>
-        <Text style={styles.memoDate}>2024年01月03日 10:00</Text>
+        <Text style={styles.memoTitle}>{memo?.bodyText}</Text>
+        <Text style={styles.memoDate}>{memo?.updatedAt?.toDate().toLocaleString('ja-JP')}</Text>
       </View>
       <ScrollView style={styles.memoBody}>
         <Text style={styles.memoBodyText}>
-          買い物リスト書体やレイアウトなどを確認するために用います。本文用なので使い方を間違えると不自然に見えることもありますので要注意。
+          {memo?.bodyText}
         </Text>
       </ScrollView>
-      <CircleBotton style={{ top: 60, bottom: 'auto' }} onPress={handlePress}>
+      <CircleBotton style={{ top: 60, bottom: 'auto' }} onPress={() => { handlePress(id) }}>
         {/* <Feather name="plus" size={40} /> */}
         <Icon name='pencil' size={48} color='#ffffff'/>
       </CircleBotton>
@@ -53,10 +73,10 @@ const styles = StyleSheet.create({
   },
 
   memoBody: {
-    paddingHorizontal: 27,
-    paddingVertical: 32
+    paddingHorizontal: 27
   },
   memoBodyText: {
+    paddingVertical: 32,
     fontSize: 16,
     lineHeight: 24,
     color: '#212121'
